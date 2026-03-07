@@ -2,6 +2,7 @@ import LocalHelp from './LocalHelp';
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import './App.css';
+import ScrollToTop from './ScrollToTop';
 // React Router imports
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
@@ -388,6 +389,7 @@ function App() {
   // --- 14. THE MAIN VISUAL COMPONENT ---
   return (
     <Router>
+      <ScrollToTop />
     <div className="App" style={{ 
       
       backgroundColor: cyberMode ? themes.cyber.bg : themes.pro.bg, 
@@ -445,7 +447,16 @@ function App() {
         }
       `}</style>
       {/* --- NAVIGATION MENU --- */}
-<nav style={{ padding: '20px', textAlign: 'center', borderBottom: '1px solid #333', marginBottom: '20px' }}>
+<nav style={{ 
+  padding: '20px', 
+  textAlign: 'center', 
+  borderBottom: '1px solid #333', 
+  marginBottom: '20px',
+  position: 'sticky',   // This keeps it at the top
+  top: '0',            // Distance from the top
+  zIndex: '1000',      // Ensures it stays above other elements
+  backgroundColor: cyberMode ? themes.cyber.bg : themes.pro.bg // Matches your theme
+}}>
   <Link to="/" style={{ color: '#4da6ff', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold' }}>Scanner (Home)</Link>
   <Link to="/how-to-use" style={{ color: 'white', margin: '0 15px', textDecoration: 'none' }}>How to Use</Link>
   <Link to="/about" style={{ color: 'white', margin: '0 15px', textDecoration: 'none' }}>About</Link>
