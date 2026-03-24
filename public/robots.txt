@@ -1,3 +1,6 @@
-# https://www.robotstxt.org/robotstxt.html
+# This tells all bots they are allowed to crawl the site
 User-agent: *
-Disallow:
+Allow: /
+
+# This points them directly to your floor plan
+Sitemap: https://legal-lens-dun.vercel.app/sitemap.xml
