@@ -13,8 +13,12 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://legal-lens-dun.vercel.app/contact</loc>
+    <loc>https://legal-lens-dun.vercel.app/faq</loc>
     <priority>0.7</priority>
+  </url>
+   <url>
+    <loc>https://legal-lens-dun.vercel.app/contact</loc>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://legal-lens-dun.vercel.app/terms</loc>

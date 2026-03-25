@@ -103,6 +103,12 @@ function About() {
           <span style={styles.upcomingBadge}>Data (Soon)</span>
         </div>
       </div>
+      {/* Add this below your Lens Intelligence Suite div */}
+<div style={styles.footerLinks}>
+  <a href="/faq" style={styles.footerLinkItem}>FAQ</a>
+  <a href="/terms" style={{...styles.footerLinkItem, color: '#888'}}>Terms</a>
+  <a href="/contact" style={{...styles.footerLinkItem, color: '#888'}}>Contact</a>
+</div>
     </div>
   );
 }
@@ -234,7 +240,21 @@ ecosystemContainer: {
     borderRadius: "20px",
     fontSize: "0.8rem",
     border: "1px solid #222"
-  }
+  },
+  // Add this inside your const styles object
+footerLinks: {
+  textAlign: "center",
+  marginTop: "40px",
+  padding: "20px",
+  borderTop: "1px solid #222"
+},
+footerLinkItem: {
+  color: "#4da6ff",
+  margin: "0 15px",
+  textDecoration: "none",
+  fontSize: "0.9rem",
+  transition: "0.3s"
+}
 };
 
 export default About;

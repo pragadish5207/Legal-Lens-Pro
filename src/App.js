@@ -3,6 +3,7 @@ import LocalHelp from './LocalHelp';
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import './App.css';
+import FAQ from './pages/FAQ';
 import ScrollToTop from './ScrollToTop';
 // React Router imports
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -482,10 +483,12 @@ Analyze the provided content with "Extreme Prejudice."
           <Link to="/" style={{ color: '#4da6ff', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold' }}>Scanner (Home)</Link>
           <Link to="/how-to-use" style={{ color: 'white', margin: '0 15px', textDecoration: 'none' }}>How to Use</Link>
           <Link to="/about" style={{ color: 'white', margin: '0 15px', textDecoration: 'none' }}>About</Link>
+          <Link to="/faq" style={{ color: 'white', margin: '0 15px', textDecoration: 'none' }}>FAQ</Link>
           <Link to="/contact" style={{ color: 'white', margin: '0 15px', textDecoration: 'none' }}>Contact</Link>
           <Link to="/terms" style={{ color: 'white', margin: '0 15px', textDecoration: 'none' }}>Terms</Link>
         </nav>
         <Routes>
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/how-to-use" element={
             <>
               <Helmet>

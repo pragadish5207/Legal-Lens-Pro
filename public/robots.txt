@@ -1,6 +1,7 @@
 # This tells all bots they are allowed to crawl the site
 User-agent: *
 Allow: /
+Allow: /faq
 
 # This points them directly to your floor plan
 Sitemap: https://legal-lens-dun.vercel.app/sitemap.xml
