@@ -41,7 +41,7 @@ function Contact() {
       <div style={styles.devBadge}>
         <div style={styles.avatar}>P</div>
         <div>
-          <h3 style={{ margin: 0, color: "#fff" }}>Pragadishwar (Appu)</h3>
+          <h3 style={{ margin: 0, color: "#fff" }}>Pragadishwar </h3>
           <p style={{ margin: 0, fontSize: "0.9rem", color: "#888" }}>
             B.Com Student | AI Developer | Jio Institute Alumnus
           </p>

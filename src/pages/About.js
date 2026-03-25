@@ -7,7 +7,7 @@ function About() {
       <section style={styles.section}>
         <h1 style={styles.heading}>About Legal-Lens Pro</h1>
         <p style={styles.tagline}>
-          The First AI Contract Analyzer Built for Indian Legal Transparency.
+          A Specialized AI Scanner for <strong>Indian Law</strong>.
         </p>
         <p style={styles.paragraph}>
           Legal-Lens Pro is a comprehensive SEO-friendly <strong>AI contract scanner</strong> designed 
@@ -21,35 +21,39 @@ function About() {
       <section style={styles.section}>
         <h2 style={styles.subheading}>Key Innovations</h2>
         <div style={styles.featureGrid}>
-          <div style={styles.featureItem}>
-            <h3 style={styles.featureTitle}>📊 Risk-O-Meter</h3>
-            <p style={styles.featureText}>
-              A gamified diagnostic tool that identifies "Red Flags" in documents 
-              and scores them based on legal safety.
-            </p>
-          </div>
-          <div style={styles.featureItem}>
-            <h3 style={styles.featureTitle}>🌐 50+ Regional Languages</h3>
-            <p style={styles.featureText}>
-              Bridging the language gap by providing instant AI-powered 
-              translations for over 50 regional Indian languages.
-            </p>
-          </div>
-          <div style={styles.featureItem}>
-            <h3 style={styles.featureTitle}>⚖️ DLSA Integration</h3>
-            <p style={styles.featureText}>
-              Direct mapping to 750+ District Legal Services Authorities across 
-              India to provide users with immediate local help.
-            </p>
-          </div>
-        </div>
+  <div style={styles.featureItem}>
+    <h3 style={styles.featureTitle}>📊 Risk-O-Meter</h3>
+    <p style={styles.featureText}>
+      A gamified diagnostic tool that identifies "Red Flags" in documents and scores them based on legal safety.
+    </p>
+  </div>
+  <div style={styles.featureItem}>
+    <h3 style={styles.featureTitle}>🌐 50+ Regional Languages</h3>
+    <p style={styles.featureText}>
+      Bridging the language gap by providing instant AI-powered translations for over 50 regional Indian languages.
+    </p>
+  </div>
+  <div style={styles.featureItem}>
+    <h3 style={styles.featureTitle}>⚖️ DLSA Integration</h3>
+    <p style={styles.featureText}>
+      Direct mapping to 750+ District Legal Services Authorities across India to provide users with immediate local help.
+    </p>
+  </div>
+  {/* NEW 4th FEATURE TO FIX THE GRID */}
+  <div style={styles.featureItem}>
+    <h3 style={styles.featureTitle}>📄 Smart OCR Scanner</h3>
+    <p style={styles.featureText}>
+      Advanced Optical Character Recognition allows you to upload photos of physical contracts for instant digital analysis.
+    </p>
+  </div>
+</div>
       </section>
 
       {/* --- HOW IT WORKS SECTION --- */}
       <section style={styles.section}>
         <h2 style={styles.subheading}>How It Works</h2>
         <p style={styles.paragraph}>
-          Using <strong>Google Gemini 1.5 Flash API</strong>, Legal-Lens Pro processes uploaded 
+          Using <strong>Google Gemini flash API</strong>, Legal-Lens Pro processes uploaded 
           PDFs or pasted text to perform an <em>automated contract review</em>. It scans for 
           unfair clauses, hidden liabilities, and specific violations of Indian law, 
           generating a report in plain English or your preferred regional tongue.

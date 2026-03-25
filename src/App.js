@@ -595,7 +595,7 @@ function App() {
                 </span>
               </h1>
               <p style={{ color: "#aaa", marginBottom: "30px" }}>
-                The first AI-powered scanner for the <strong>Indian Contract Act 1872</strong>. 
+                A Specialized AI Scanner for <strong>Indian Law</strong>. 
                 Detect legal risks and red flags in seconds.
               </p>              
               {/* --- SYSTEM ERROR DISPLAY --- */}
