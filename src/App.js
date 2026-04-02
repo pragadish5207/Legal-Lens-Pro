@@ -14,6 +14,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Terms from './pages/Terms';
 import HowToUse from './pages/HowToUse';
+import { LEGAL_TIPS, CASE_STUDIES } from './legalData';
 
 // ---  THEME COLOR DEFINITIONS ---
 const themes = {
@@ -107,6 +108,27 @@ const RiskGauge = ({ score, cyberMode }) => {
 };
 
 function App() {
+
+// --- 3A. SIDEBAR LOGIC (DUAL 10-SECOND TIMERS) ---
+  const [tipIndex, setTipIndex] = useState(0);
+  const [caseIndex, setCaseIndex] = useState(0);
+
+  useEffect(() => {
+    // 1. Timer for Legal Tips (Changes every 20 seconds)
+    const tipTimer = setInterval(() => {
+      setTipIndex((prev) => (prev + 1) % LEGAL_TIPS.length);
+    }, 20000); 
+
+    // 2. Timer for Case Studies (Changes every 20 seconds)
+    const caseTimer = setInterval(() => {
+      setCaseIndex((prev) => (prev + 1) % CASE_STUDIES.length);
+    }, 20000); 
+
+    return () => {
+      clearInterval(tipTimer);
+      clearInterval(caseTimer);
+    };
+  }, []);
 
   // --- NEW: INDIAN LAW MODE STATE ---
   const [indianLawMode, setIndianLawMode] = useState(false);
@@ -416,9 +438,7 @@ Analyze the provided content with "Extreme Prejudice."
       <div className="App" style={{ 
         backgroundColor: cyberMode ? themes.cyber.bg : themes.pro.bg, 
         color: cyberMode ? themes.cyber.text : themes.pro.text,
-        minHeight: "100vh",
-        transition: "all 0.5s ease", 
-        padding: "20px"
+        minHeight: "100vh"
       }}>
         <ScrollToTop />
         {/* --- NUCLEAR RESPONSIVE FIX (Forces Padding Everywhere) --- */}
@@ -598,26 +618,46 @@ Analyze the provided content with "Extreme Prejudice."
               )}
 
               {/* --- HEADER SECTION --- */}
-              {/* --- HEADER SECTION --- */}
               <h1>
-                ⚡ Legal-Lens Pro: AI Contract Analyzer ⚡ 
-                <span 
-                  className={apiStatus === "online" ? "live-pulse" : ""}
-                  style={{ 
-                    fontSize: '12px', 
-                    verticalAlign: 'middle', 
-                    marginLeft: '10px',
-                    transition: "color 0.3s ease",
-                    color: apiStatus === "online" ? "#28a745" : apiStatus === "offline" ? "#dc3545" : "#ffc107"
-                  }}
-                >
-                  ● {apiStatus.toUpperCase()}
-                </span>
-              </h1>
+  ⚡ <span className="gradient-text">Legal-Lens Pro: AI Contract Analyzer</span> ⚡ 
+  <span 
+    className={apiStatus === "online" ? "live-pulse" : ""}
+    style={{ 
+      fontSize: '12px', 
+      verticalAlign: 'middle', 
+      marginLeft: '10px',
+      color: apiStatus === "online" ? "#28a745" : "#dc3545"
+    }}
+  >
+    ● {apiStatus.toUpperCase()}
+  </span>
+</h1>
               <p style={{ color: "#aaa", marginBottom: "30px" }}>
                 A Specialized AI Scanner for <strong>Indian Law</strong>. 
                 Detect legal risks and red flags in seconds.
               </p>              
+              {/* --- 3-COLUMN MASTER LAYOUT --- */}
+              <div className="legal-lens-layout">
+
+                {/* A. LEFT SIDEBAR: LEGAL TIPS (Auto-Rotating) */}
+                <aside className="sidebar-sticky" style={{ 
+                  borderLeft: cyberMode ? `3px solid ${themes.cyber.accent}` : "3px solid #007bff",
+                  boxShadow: cyberMode ? themes.cyber.glow : "none" 
+                }}>
+                  <h3 style={{ 
+                    color: cyberMode ? themes.cyber.secondary : "#4da6ff", 
+                    fontSize: "14px", marginBottom: "20px", textAlign: "center",
+                    textShadow: cyberMode ? `0 0 5px ${themes.cyber.secondary}` : "none"
+                  }}>
+                    ⚖️ LEGAL TIPS
+                  </h3>
+                  <div className="sidebar-card">
+                    {LEGAL_TIPS[tipIndex]}
+                  </div>
+                </aside>
+
+                {/* B. CENTER COLUMN: THE MAIN SCANNER */}
+                <main className="main-scanner-content">
               {/* --- SYSTEM ERROR DISPLAY --- */}
               {modelError && (
                 <div style={{ 
@@ -780,18 +820,67 @@ Analyze the provided content with "Extreme Prejudice."
               {/* --- LOCAL HELP COMPONENT --- */}
               <div className="section-container" style={{ maxWidth: '600px', margin: '20px auto' }}>
                 <LocalHelp cyberMode={cyberMode} />
+
               </div>
+              </main>
+
+                {/* C. RIGHT SIDEBAR: CASE STUDIES (Random on Refresh) */}
+                <aside className="sidebar-sticky" style={{ 
+                  borderLeft: cyberMode ? `3px solid ${themes.cyber.secondary}` : "3px solid #ff00ff",
+                  boxShadow: cyberMode ? themes.cyber.glow : "none" 
+                }}>
+                  <h3 style={{ 
+                    color: cyberMode ? themes.cyber.accent : "#ff00ff", 
+                    fontSize: "14px", marginBottom: "20px", textAlign: "center",
+                    textShadow: cyberMode ? `0 0 5px ${themes.cyber.accent}` : "none"
+                  }}>
+                    📖 CASE STUDIES
+                  </h3>
+                  <div className="sidebar-card" style={{ borderLeftColor: cyberMode ? themes.cyber.secondary : "#ff00ff" }}>
+  {/* This line checks if it's an object with .text, otherwise it just shows the string */}
+  <p style={{ color: "#fff", fontSize: "15px", lineHeight: "1.5" }}>
+    {typeof CASE_STUDIES[caseIndex] === 'object' ? CASE_STUDIES[caseIndex].text : CASE_STUDIES[caseIndex]}
+  </p>
+  
+  <button 
+    className="search-verify-btn"
+    onClick={() => {
+      const query = typeof CASE_STUDIES[caseIndex] === 'object' ? CASE_STUDIES[caseIndex].text : CASE_STUDIES[caseIndex];
+      window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+    }}
+  >
+    <span>🔍</span> VERIFY ON GOOGLE
+  </button>
+</div>
+                </aside>
+
+              </div> {/* End of legal-lens-layout */}
             </>
           } />
         </Routes>
 
         {/* --- FOOTER: Professional Branding --- */}
         <footer style={{ 
-          marginTop: "80px", padding: "30px", borderTop: "1px solid #333", 
-          fontSize: "12px", color: "#666", textAlign: "center", lineHeight: "1.8"
+          marginTop: "100px", 
+          padding: "50px 20px", 
+          borderTop: "1px solid #444", 
+          fontSize: "16px", // Increased from 12px for better visibility
+          color: "#999", 
+          textAlign: "center", 
+          lineHeight: "2"
         }}>
-          <p>⚠️ <strong>LEGAL DISCLAIMER:</strong> This AI tool provides general information and is not a substitute for professional legal advice.</p>
-          <p style={{ color: "#007bff", fontWeight: "bold" }}>© 2026 Pragadishwar - Built with Google Gemini API</p>
+          <p style={{ maxWidth: "800px", margin: "0 auto 20px auto" }}>
+            ⚠️ <strong>LEGAL DISCLAIMER:</strong> This AI tool provides general information and is not a substitute for professional legal advice.
+          </p>
+          
+          <p style={{ fontSize: "20px", fontWeight: "bold" }}>
+            © 2026 <span className="gradient-text">Pragadishwar</span> — Built with Google Gemini API
+          </p>
+          
+          {/* Optional: Add a small sub-text for your Course completion */}
+          <p style={{ fontSize: "12px", color: "#555", marginTop: "10px" }}>
+            AI Classroom Foundation Graduate | Generative AI Mastermind
+          </p>
         </footer>
       </div>
     </Router>
