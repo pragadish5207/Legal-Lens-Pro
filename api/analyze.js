@@ -5,19 +5,53 @@ export default async function handler(req, res) {
   }
 
   try {
-    // FIX: Extract contents from the request body
+    // 2. Extract contents and API Key
     const { contents } = req.body;
-    
-    // FIX: Define the apiKey from your Environment Variables
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return res.status(500).json({ error: "API Key is missing on the server." });
     }
 
-    // 3. THE PRIVATE CONVERSATION
+    // --- DYNAMIC MODEL DISCOVERY & FILTERING ---
+    // Fetch all available models from Google to avoid "Not Found" errors
+    const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+    const listData = await listResponse.json();
+
+    if (!listData.models) {
+      throw new Error("Could not retrieve model list from Google.");
+    }
+
+    // Filter out multimedia models (Veo, Lyria, Nano Banana) and keep text generators
+    const textModels = listData.models.filter(m => {
+      const name = m.name.toLowerCase();
+      const description = m.description?.toLowerCase() || "";
+      
+      // Only keep models that support document/text analysis
+      const supportsText = m.supportedGenerationMethods.includes('generateContent');
+
+      // Identify and remove multimedia models
+      const isMultimedia = name.includes('veo') ||     // Video
+                           name.includes('lyria') ||   // Music
+                           name.includes('banana') ||  // Images
+                           description.includes('image generation') || 
+                           description.includes('video generation');
+
+      return supportsText && !isMultimedia;
+    });
+
+    // Select the "Best" model (Ideally Gemini 3 Flash for 2026)
+    const selectedModel = textModels.find(m => m.name.includes('gemini-3-flash')) || 
+                          textModels.find(m => m.name.includes('flash')) ||
+                          textModels[0]; // Final fallback to any available text model
+
+    if (!selectedModel) {
+      throw new Error("No suitable text-based models found.");
+    }
+
+    // 3. THE PRIVATE CONVERSATION (Using the discovered model)
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/${selectedModel.name}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -32,6 +66,9 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("Server Error:", error);
-    res.status(500).json({ error: 'Failed to process legal scan' });
+    res.status(500).json({ 
+      error: 'Failed to process legal scan', 
+      details: error.message 
+    });
   }
 }
