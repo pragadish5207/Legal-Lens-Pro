@@ -1,5 +1,4 @@
 import './Layout.css';
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -29,21 +28,21 @@ import ReportDisplay from './components/ReportDisplay';
 // --- NEW HOOKS (The Brains) ---
 import { useContractScanner } from './hooks/useContractScanner';
 import { useSidebarData } from './hooks/useSidebarData';
+
 function App() {
   // --- 1. UI & PREFERENCE STATES ---
-  // These handle the "look and feel" and settings
   const [cyberMode, setCyberMode] = useState(false);
   const [indianLawMode, setIndianLawMode] = useState(false);
   const [hasAgreed, setHasAgreed] = useState(false);
   const [language, setLanguage] = useState("English");
 
   // --- 2. THE BRAINS (Hooks) ---
-  // We "ask" our custom hooks to handle the timing and scanning
   const { currentTip, currentCase } = useSidebarData();
   
+  // FIXED: Added 'riskScore' to the destructuring list below
   const {
     manualText, setManualText, files, handleFileChange, previews,
-    analysis, loading, loadingMessage, apiStatus, modelError,
+    analysis, riskScore, loading, loadingMessage, apiStatus, modelError,
     resultsRef, analyzeContract, handleClear
   } = useContractScanner(language, indianLawMode);
 
@@ -51,7 +50,6 @@ function App() {
   const filteredLanguages = LANGUAGES.filter(lang => 
     lang.toLowerCase().startsWith(language.toLowerCase())
   );
-
   // --- 3. UTILITY HANDLERS ---
   const handleDownload = () => {
     const element = document.createElement("a");
@@ -66,6 +64,7 @@ function App() {
     navigator.clipboard.writeText(analysis);
     alert("✅ Report copied to clipboard!");
   };
+
   return (
     <Router>
       <div className="App" style={{ 
@@ -150,9 +149,8 @@ function App() {
                 <GatekeeperModal onAgree={() => setHasAgreed(true)} />
               )}
 
-              {/* --- HEADER SECTION --- */}
               <h1>
-                ⚡ <span className="gradient-text">Legal-Lens Pro: AI Contract Analyzer</span> ⚡ 
+                ⚡ <span className="gradient-text">Legal-Lens Pro</span> ⚡ 
                 <span 
                   className={apiStatus === "online" ? "live-pulse" : ""}
                   style={{ fontSize: '12px', verticalAlign: 'middle', marginLeft: '10px', color: apiStatus === "online" ? "#28a745" : "#dc3545" }}
@@ -160,13 +158,10 @@ function App() {
                   ● {apiStatus.toUpperCase()}
                 </span>
               </h1>
-              <p style={{ color: "#aaa", marginBottom: "30px", textAlign: 'center' }}>
-                A Specialized AI Scanner for <strong>Indian Law</strong>. Detect legal risks in seconds.
-              </p>
+
               {/* --- 3-COLUMN MASTER LAYOUT --- */}
               <div className="legal-lens-layout">
-
-                {/* A. LEFT SIDEBAR: LEGAL TIPS (Auto-Rotating) */}
+                {/* LEFT SIDEBAR: LEGAL TIPS (Logic handled by useSidebarData) */}
                 <aside className="sidebar-sticky" style={{ 
                   borderLeft: cyberMode ? `3px solid ${themes.cyber.accent}` : "3px solid #007bff",
                   boxShadow: cyberMode ? themes.cyber.glow : "none" 
@@ -178,13 +173,12 @@ function App() {
                   }}>
                     ⚖️ LEGAL TIPS
                   </h3>
-                  <div className="sidebar-card">
-                    {currentTip}
-                  </div>
+                  <div className="sidebar-card">{currentTip}</div>
                 </aside>
 
-                {/* B. CENTER COLUMN: THE MAIN SCANNER */}
                 <main className="main-scanner-content">
+                  {/* --- THE RISK-O-METER: Finally connected to 'riskScore' --- */}
+                  <RiskGauge score={riskScore} cyberMode={cyberMode} />
                   {/* --- SYSTEM ERROR DISPLAY --- */}
                   {modelError && (
                     <div style={{ 
@@ -224,6 +218,7 @@ function App() {
                       </div>
                     ))}
                   </div>
+
                   {/* --- MANUAL TEXT INPUT AREA --- */}
                   <textarea
                     placeholder="Or paste your contract text, email, or WhatsApp message here..."
@@ -235,9 +230,9 @@ function App() {
                       fontSize: "14px", fontFamily: "monospace"
                     }}
                   />
-
+                  {/* --- ACTION BUTTONS & SETTINGS --- */}
                   <div style={{ display: "flex", justifyContent: "center", gap: "15px", margin: "20px 0", flexWrap: "wrap" }}>
-                    {/* --- LANGUAGE SELECTOR --- */}
+                    {/* LANGUAGE SELECTOR */}
                     <div style={{ display: "inline-block" }}>
                       <input 
                         list="language-options" 
@@ -256,7 +251,7 @@ function App() {
                       </datalist>
                     </div>
 
-                    {/* --- INDIAN LAW TOGGLE --- */}
+                    {/* INDIAN LAW MODE TOGGLE */}
                     <label style={{ display: "flex", alignItems: "center", cursor: "pointer", color: "#fff" }}>
                       <input 
                         type="checkbox" 
@@ -276,7 +271,7 @@ function App() {
                     </button>
                   </div>
 
-                  {/* --- RESULTS SECTION: Our New Component --- */}
+                  {/* --- RESULTS & REPORTS --- */}
                   <ReportDisplay 
                     analysis={analysis}
                     cyberMode={cyberMode}
@@ -284,7 +279,7 @@ function App() {
                     handleCopy={handleCopy}
                     handleDownload={handleDownload}
                   />
-                  {/* --- SUGGESTION BOX & LOCAL HELP --- */}
+
                   <SuggestionBox />
 
                   <div className="section-container" style={{ maxWidth: '600px', margin: '20px auto' }}>
@@ -292,7 +287,7 @@ function App() {
                   </div>
                 </main>
 
-                {/* C. RIGHT SIDEBAR: CASE STUDIES (Auto-Rotating) */}
+                {/* C. RIGHT SIDEBAR: CASE STUDIES */}
                 <aside className="sidebar-sticky" style={{ 
                   borderLeft: cyberMode ? `3px solid ${themes.cyber.secondary}` : "3px solid #ff00ff",
                   boxShadow: cyberMode ? themes.cyber.glow : "none" 
