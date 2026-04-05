@@ -1,13 +1,50 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* --- 1. GLOBAL VARIABLES & RESET --- */
+:root {
+  --bg-main: #121212;
+  --bg-card: #1a1a1a;
+  --bg-results: #25262b;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b3b8;
+  --accent-blue: #007bff;
+  --accent-cyber: #ff00ff;
+  --glow-blue: 0 0 15px rgba(0, 123, 255, 0.4);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* The "Reset": Makes sure browsers don't add random gaps */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* --- 2. SCROLLBAR STYLING (The Cherry on Top) --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* --- 3. GLOBAL ANIMATIONS --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
