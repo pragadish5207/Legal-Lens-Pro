@@ -39,7 +39,6 @@ function App() {
   // --- 2. THE BRAINS (Hooks) ---
   const { currentTip, currentCase } = useSidebarData();
   
-  // FIXED: Added 'riskScore' to the destructuring list below
   const {
     manualText, setManualText, files, handleFileChange, previews,
     analysis, riskScore, loading, loadingMessage, apiStatus, modelError,
@@ -74,7 +73,7 @@ function App() {
       }}>
         <ScrollToTop />
         
-        {/* --- RESPONSIVE STYLES --- */}
+        {/* --- GLOBAL RESPONSIVE STYLES --- */}
         <style>{`
           * { box-sizing: border-box !important; }
           body, html, #root {
@@ -128,7 +127,7 @@ function App() {
                 <meta name="description" content="Scan legal documents for risks using Indian Law optimized AI." />
               </Helmet>
               
-              {/* --- CYBER-TOGGLE BUTTON --- */}
+              {/* --- CYBER-TOGGLE --- */}
               <button 
                 onClick={() => setCyberMode(!cyberMode)}
                 style={{
@@ -145,9 +144,7 @@ function App() {
               </button>
 
               {/* --- GATEKEEPER MODAL --- */}
-              {!hasAgreed && (
-                <GatekeeperModal onAgree={() => setHasAgreed(true)} />
-              )}
+              {!hasAgreed && <GatekeeperModal onAgree={() => setHasAgreed(true)} />}
 
               <h1>
                 ⚡ <span className="gradient-text">Legal-Lens Pro</span> ⚡ 
@@ -159,26 +156,20 @@ function App() {
                 </span>
               </h1>
 
-              {/* --- 3-COLUMN MASTER LAYOUT --- */}
               <div className="legal-lens-layout">
-                {/* LEFT SIDEBAR: LEGAL TIPS (Logic handled by useSidebarData) */}
+                {/* A. LEFT SIDEBAR: LEGAL TIPS */}
                 <aside className="sidebar-sticky" style={{ 
                   borderLeft: cyberMode ? `3px solid ${themes.cyber.accent}` : "3px solid #007bff",
                   boxShadow: cyberMode ? themes.cyber.glow : "none" 
                 }}>
-                  <h3 style={{ 
-                    color: cyberMode ? themes.cyber.secondary : "#4da6ff", 
-                    fontSize: "14px", marginBottom: "20px", textAlign: "center",
-                    textShadow: cyberMode ? `0 0 5px ${themes.cyber.secondary}` : "none"
-                  }}>
+                  <h3 style={{ color: cyberMode ? themes.cyber.secondary : "#4da6ff", fontSize: "14px", marginBottom: "20px", textAlign: "center" }}>
                     ⚖️ LEGAL TIPS
                   </h3>
                   <div className="sidebar-card">{currentTip}</div>
                 </aside>
 
+                {/* B. CENTER COLUMN: THE MAIN SCANNER */}
                 <main className="main-scanner-content">
-                  {/* --- THE RISK-O-METER: Finally connected to 'riskScore' --- */}
-                  <RiskGauge score={riskScore} cyberMode={cyberMode} />
                   {/* --- SYSTEM ERROR DISPLAY --- */}
                   {modelError && (
                     <div style={{ 
