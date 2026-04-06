@@ -265,6 +265,8 @@ function App() {
                   {/* --- RESULTS & REPORTS --- */}
                   <ReportDisplay 
                     analysis={analysis}
+                    riskScore={riskScore}
+                    loading={loading}
                     cyberMode={cyberMode}
                     resultsRef={resultsRef}
                     handleCopy={handleCopy}
