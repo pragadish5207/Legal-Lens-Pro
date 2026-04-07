@@ -7,7 +7,6 @@ const Updates = () => {
     bg: "transparent",
     text: "#e0e0e0",
     subtext: "#888",
-    // Color Palette
     future: "#a855f7", // Purple
     current: "#007bff", // Blue
     past: "#333"       // Grey
@@ -17,19 +16,31 @@ const Updates = () => {
     <div style={{ padding: '100px 20px', maxWidth: '900px', margin: '0 auto', minHeight: '100vh' }}>
       <Helmet>
         <title>Product Roadmap | Legal-Lens Pro AI Evolution</title>
-        <meta name="description" content="Follow the development journey of Legal-Lens Pro. From a student project to a Pan-India AI Legal Aid platform." />
       </Helmet>
+
+      {/* --- INJECTING PULSE ANIMATION --- */}
+      <style>
+        {`
+          @keyframes livePulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+          }
+          .latest-badge {
+            animation: livePulse 2s infinite;
+          }
+        `}
+      </style>
 
       <h1 className="gradient-text" style={{ fontSize: '3.5rem', marginBottom: '15px', fontWeight: '900', textAlign: 'center' }}>
         Product Roadmap
       </h1>
       <p style={{ color: updateTheme.subtext, fontSize: '1.1rem', marginBottom: '80px', textAlign: 'center', maxWidth: '700px', margin: '0 auto 80px auto' }}>
-        Documenting the evolution of Legal-Lens Pro: A transparent record of our journey toward democratizing Indian law.
+        A transparent record of our journey toward democratizing Indian law with Gemini 3.
       </p>
 
       <div style={{ position: 'relative', borderLeft: `2px solid #222`, paddingLeft: '40px', marginLeft: '20px' }}>
         {PATCH_UPDATES.map((patch, index) => {
-          // Determine the "Vibe" based on status
           const isFuture = patch.status === 'PLANNED';
           const isCurrent = patch.status === 'LATEST';
           const accentColor = isFuture ? updateTheme.future : isCurrent ? updateTheme.current : updateTheme.past;
@@ -43,20 +54,23 @@ const Updates = () => {
                 width: '20px', height: '20px', borderRadius: '50%',
                 backgroundColor: '#000', 
                 border: `4px solid ${accentColor}`,
-                boxShadow: !isFuture && !isCurrent ? 'none' : `0 0 15px ${accentColor}66`,
+                boxShadow: isCurrent ? `0 0 15px ${accentColor}` : 'none',
                 zIndex: 2
               }} />
 
               {/* --- 2. THE VERSION BADGE --- */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-                <span style={{ 
-                  background: isCurrent ? accentColor : isFuture ? 'rgba(168, 85, 247, 0.1)' : '#1a1a1a',
-                  color: isCurrent ? '#fff' : isFuture ? updateTheme.future : '#666',
-                  padding: '6px 16px', borderRadius: '30px', fontSize: '12px', fontWeight: '800',
-                  letterSpacing: '1.5px', 
-                  border: isCurrent ? 'none' : `1px solid ${accentColor === updateTheme.past ? '#333' : accentColor + '44'}`
-                }}>
-                  {patch.version}
+                <span 
+                  className={isCurrent ? "latest-badge" : ""}
+                  style={{ 
+                    background: isCurrent ? accentColor : isFuture ? 'rgba(168, 85, 247, 0.1)' : '#1a1a1a',
+                    color: isCurrent ? '#fff' : isFuture ? updateTheme.future : '#666',
+                    padding: '6px 16px', borderRadius: '30px', fontSize: '12px', fontWeight: '800',
+                    letterSpacing: '1.5px', 
+                    border: isCurrent ? 'none' : `1px solid ${accentColor === updateTheme.past ? '#333' : accentColor + '44'}`
+                  }}
+                >
+                  {patch.version} {isCurrent && "• LIVE"}
                 </span>
                 <span style={{ color: updateTheme.subtext, fontSize: '14px', fontWeight: '600', textTransform: 'uppercase' }}>
                   {patch.date}
@@ -64,10 +78,10 @@ const Updates = () => {
               </div>
 
               {/* --- 3. THE CONTENT --- */}
-              <h2 style={{ color: isFuture ? '#fff' : '#fff', fontSize: '28px', marginBottom: '12px', fontWeight: '700' }}>
+              <h2 style={{ color: '#fff', fontSize: '28px', marginBottom: '12px', fontWeight: '700' }}>
                 {patch.title}
               </h2>
-              <p style={{ color: '#666', fontStyle: 'italic', marginBottom: '25px', fontSize: '1.05rem', lineHeight: '1.6' }}>
+              <p style={{ color: '#888', fontStyle: 'italic', marginBottom: '25px', fontSize: '1.05rem', lineHeight: '1.6' }}>
                 {patch.description}
               </p>
               
@@ -75,9 +89,9 @@ const Updates = () => {
                 {patch.features.map((feat, i) => (
                   <li key={i} style={{ marginBottom: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                     <span style={{ color: accentColor, fontSize: '1.2rem' }}>
-                      {isFuture ? '✨' : '•'}
+                      {isFuture ? '✨' : '✓'}
                     </span> 
-                    <span style={{ color: isFuture ? '#888' : '#bbb' }}>{feat}</span>
+                    <span style={{ color: isFuture ? '#666' : '#bbb' }}>{feat}</span>
                   </li>
                 ))}
               </ul>

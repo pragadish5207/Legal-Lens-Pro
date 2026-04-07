@@ -7,23 +7,23 @@ export const PATCH_UPDATES = [
     description: "Exploring advanced AI integrations and ecosystem synergy to transform legal literacy in India.",
     features: [
       "Sarvam AI Integration: Implementing Indic-first intelligence for high-accuracy regional translation and processing of 'messy' data.",
-      "Contextual Contract Chat: A specialized sandbox for real-time Q&A regarding your specific uploaded documents.",
+      "Contextual Contract Chat: A specialized sandbox for real-time Q&A regarding your uploaded documents.",
       "Lens-Link Ecosystem Sync: Direct integration with Study-Lens Pro to learn the theory and rules behind complex legal terms.",
-      "Continuous Optimization: Ongoing bug fixes, performance tuning, and implementation of community-requested features."
+      "Continuous Optimization: Ongoing performance tuning and community-requested feature implementation."
     ]
   },
   {
     version: "v2.5",
     date: "April 2026",
-    status: "LATEST",
+    status: "LATEST", // This keeps it highlighted as the current version
     title: "The Dashboard Revolution",
     description: "A major UI overhaul and content expansion for a '360-degree' legal experience.",
     features: [
-      "New 3-Column Desktop Dashboard: A high-end workspace for document analysis.",
-      "The Knowledge Bank: 100+ rotating Legal Tips and Case Studies for real-time insights.",
-      "Smart Verification: Integrated 'Verify on Google' logic for all legal facts.",
-      "Privacy First: Full compliance with the DPDP Act 2023 for secure document processing.",
-      "Enhanced Multilingual Support: Optimized UX for 50+ regional Indian languages."
+      "SOTA AI Engine: Full migration to Gemini 3 Flash for 2026-grade legal reasoning and 40% faster scans.",
+      "New 3-Column Desktop Dashboard: A high-end workspace featuring the 'Why Choose Us' Value Bridge.",
+      "The Knowledge Bank: 100+ rotating Legal Tips and Case Studies with manual playback controls.",
+      "Smart Verification: Integrated 'Verify on Google' logic for all legal fact-checking.",
+      "DPDP Act 2023 Compliance: Enhanced privacy protocols for secure, ephemeral document processing."
     ]
   },
   {
@@ -59,7 +59,7 @@ export const PATCH_UPDATES = [
     title: "The Birth of Legal-Lens",
     description: "The very first version focused on core AI contract analysis.",
     features: [
-      "Basic Gemini 1.5 Flash API integration.",
+      "Initial Gemini API integration (Legacy 1.5 Engine).",
       "PDF and Image upload capability.",
       "Manual text analysis field.",
       "Offline status detection."

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { LEGAL_TIPS, CASE_STUDIES } from './legalData';
+import WhyChooseUs from './components/WhyChooseUs';
 
 // --- STYLES & ASSETS ---
 import './App.css';
@@ -300,6 +301,8 @@ function App() {
       handleCopy={handleCopy}
       handleDownload={handleDownload}
     />
+
+<WhyChooseUs cyberMode={cyberMode} themes={themes} />
 
     <SuggestionBox />
 
