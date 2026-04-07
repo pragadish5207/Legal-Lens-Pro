@@ -2,6 +2,7 @@ import './Layout.css';
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { LEGAL_TIPS, CASE_STUDIES } from './legalData';
 
 // --- STYLES & ASSETS ---
 import './App.css';
@@ -37,7 +38,18 @@ function App() {
   const [language, setLanguage] = useState("English");
 
   // --- 2. THE BRAINS (Hooks) ---
-  const { currentTip, currentCase } = useSidebarData();
+  const { 
+  tipIndex, 
+  caseIndex, 
+  totalTips, 
+  totalCases, 
+  isPlaying, 
+  nextTip, 
+  prevTip, 
+  nextCase, 
+  prevCase, 
+  togglePlay 
+} = useSidebarData();
   
   const {
     manualText, setManualText, files, handleFileChange, previews,
@@ -124,7 +136,7 @@ function App() {
             <>
               <Helmet>
                 <title>Legal-Lens Pro - AI Legal Companion India</title>
-                <meta name="description" content="Scan legal documents for risks using Indian Law optimized AI." />
+                <meta name="description" content="Free AI Legal Assistant in India. Scan contracts for risks, decode legal jargon, and find 750+ District Legal Services Authorities (DLSA) instantly." />
               </Helmet>
               
               {/* --- CYBER-TOGGLE --- */}
@@ -156,158 +168,184 @@ function App() {
                 </span>
               </h1>
 
+                <p style={{ color: cyberMode ? themes.cyber.accent : '#007bff', fontSize: '1rem', marginTop: '5px',marginBottom: '30px', textAlign: 'center', opacity: 0.9 }}>
+  India's Advanced AI Contract Analyzer | Spot Red Flags Instantly | 50+ Languages & 750+ DLSA Integration
+</p>
+
               <div className="legal-lens-layout">
-                {/* A. LEFT SIDEBAR: LEGAL TIPS */}
-                <aside className="sidebar-sticky" style={{ 
-                  borderLeft: cyberMode ? `3px solid ${themes.cyber.accent}` : "3px solid #007bff",
-                  boxShadow: cyberMode ? themes.cyber.glow : "none" 
-                }}>
-                  <h3 style={{ color: cyberMode ? themes.cyber.secondary : "#4da6ff", fontSize: "14px", marginBottom: "20px", textAlign: "center" }}>
-                    ⚖️ LEGAL TIPS
-                  </h3>
-                  <div className="sidebar-card">{currentTip}</div>
-                </aside>
+  {/* A. LEFT SIDEBAR: LEGAL TIPS */}
+  <aside className="sidebar-sticky" style={{ 
+    borderLeft: cyberMode ? `3px solid ${themes.cyber.accent}` : "3px solid #007bff",
+    boxShadow: cyberMode ? themes.cyber.glow : "none" 
+  }}>
+    <h3 style={{ fontSize: '1rem', marginBottom: '15px', color: cyberMode ? themes.cyber.secondary : '#4da6ff' }}>
+      ⚖️ LEGAL TIPS 
+      <span style={{ fontSize: '0.8rem', opacity: 0.7, marginLeft: '10px' }}>
+        ({tipIndex + 1}/{totalTips})
+      </span>
+    </h3>
+    
+    <div className="sidebar-card">{LEGAL_TIPS[tipIndex]}</div>
 
-                {/* B. CENTER COLUMN: THE MAIN SCANNER */}
-                <main className="main-scanner-content">
-                  {/* --- SYSTEM ERROR DISPLAY --- */}
-                  {modelError && (
-                    <div style={{ 
-                      backgroundColor: "#2d0a0a", padding: "10px", margin: "10px auto", 
-                      borderRadius: "5px", maxWidth: "600px", fontSize: "12px", 
-                      border: "1px solid #ff4444", color: "#ff8888" 
-                    }}>
-                      <strong>🚨 SYSTEM ERROR:</strong> {modelError}
-                    </div>
-                  )}
+    {/* --- NEW: SIDEBAR CONTROLS --- */}
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '15px' }}>
+      <button onClick={prevTip} className="sidebar-ctrl-btn">⏮️</button>
+      <button onClick={togglePlay} className="sidebar-ctrl-btn">
+        {isPlaying ? '⏸️' : '▶️'}
+      </button>
+      <button onClick={nextTip} className="sidebar-ctrl-btn">⏭️</button>
+    </div>
+  </aside>
 
-                  {/* --- UPLOAD SECTION --- */}
-                  <div className="upload-box">
-                    <input 
-                      type="file" multiple accept="image/*,application/pdf" 
-                      onChange={handleFileChange} 
-                    />
-                    <p style={{marginTop: "10px", fontSize: "12px", color: "#888"}}>
-                      (Supports: JPG, PNG, PDF)
-                    </p>
-                  </div>
+  {/* B. CENTER COLUMN: THE MAIN SCANNER */}
+  <main className="main-scanner-content">
+    {/* --- SYSTEM ERROR DISPLAY --- */}
+    {modelError && (
+      <div style={{ 
+        backgroundColor: "#2d0a0a", padding: "10px", margin: "10px auto", 
+        borderRadius: "5px", maxWidth: "600px", fontSize: "12px", 
+        border: "1px solid #ff4444", color: "#ff8888" 
+      }}>
+        <strong>🚨 SYSTEM ERROR:</strong> {modelError}
+      </div>
+    )}
 
-                  {/* --- PREVIEW GALLERY --- */}
-                  <div className="preview-container">
-                    {previews.map((file, index) => (
-                      <div key={index} className="preview-item">
-                        {file.type.includes("image") ? (
-                          <img src={file.url} alt="preview" style={{width: "80px", height: "80px", objectFit: "cover", borderRadius: "4px"}} />
-                        ) : (
-                          <div style={{
-                            width: "80px", height: "80px", display: "flex", alignItems: "center", 
-                            justifyContent: "center", flexDirection: "column", color: "#e0e0e0"
-                          }}>
-                            📄 <span style={{fontSize: "9px", marginTop: "5px"}}>{file.name.substring(0, 10)}...</span>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+    {/* --- UPLOAD SECTION --- */}
+    <div className="upload-box">
+      <input 
+        type="file" multiple accept="image/*,application/pdf" 
+        onChange={handleFileChange} 
+      />
+      <p style={{marginTop: "10px", fontSize: "12px", color: "#888"}}>
+        (Supports: JPG, PNG, PDF)
+      </p>
+    </div>
 
-                  {/* --- MANUAL TEXT INPUT AREA --- */}
-                  <textarea
-                    placeholder="Or paste your contract text, email, or WhatsApp message here..."
-                    value={manualText}
-                    onChange={(e) => setManualText(e.target.value)}
-                    style={{
-                      width: "100%", height: "120px", marginTop: "20px", padding: "15px",
-                      backgroundColor: "#1a1a1a", color: "#fff", border: "1px dashed #555", borderRadius: "10px",
-                      fontSize: "14px", fontFamily: "monospace"
-                    }}
-                  />
-                  {/* --- ACTION BUTTONS & SETTINGS --- */}
-                  <div style={{ display: "flex", justifyContent: "center", gap: "15px", margin: "20px 0", flexWrap: "wrap" }}>
-                    {/* LANGUAGE SELECTOR */}
-                    <div style={{ display: "inline-block" }}>
-                      <input 
-                        list="language-options" 
-                        placeholder="Type language..." 
-                        value={language} 
-                        onChange={(e) => setLanguage(e.target.value)}
-                        style={{
-                          padding: "10px", borderRadius: "5px", border: "1px solid #444",
-                          backgroundColor: "#222", color: "#fff", width: "150px", fontSize: "14px"
-                        }}
-                      />
-                      <datalist id="language-options">
-                        {filteredLanguages.map((lang) => (
-                          <option key={lang} value={lang} />
-                        ))}
-                      </datalist>
-                    </div>
+    {/* --- PREVIEW GALLERY --- */}
+    <div className="preview-container">
+      {previews.map((file, index) => (
+        <div key={index} className="preview-item">
+          {file.type.includes("image") ? (
+            <img src={file.url} alt="preview" style={{width: "80px", height: "80px", objectFit: "cover", borderRadius: "4px"}} />
+          ) : (
+            <div style={{
+              width: "80px", height: "80px", display: "flex", alignItems: "center", 
+              justifyContent: "center", flexDirection: "column", color: "#e0e0e0"
+            }}>
+              📄 <span style={{fontSize: "9px", marginTop: "5px"}}>{file.name.substring(0, 10)}...</span>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
 
-                    {/* INDIAN LAW MODE TOGGLE */}
-                    <label style={{ display: "flex", alignItems: "center", cursor: "pointer", color: "#fff" }}>
-                      <input 
-                        type="checkbox" 
-                        checked={indianLawMode} 
-                        onChange={(e) => setIndianLawMode(e.target.checked)}
-                        style={{ marginRight: "8px", transform: "scale(1.2)" }}
-                      />
-                      Indian Law Mode
-                    </label>
+    {/* --- MANUAL TEXT INPUT AREA --- */}
+    <textarea
+      placeholder="Or paste your contract text, email, or WhatsApp message here..."
+      value={manualText}
+      onChange={(e) => setManualText(e.target.value)}
+      style={{
+        width: "100%", height: "120px", marginTop: "20px", padding: "15px",
+        backgroundColor: "#1a1a1a", color: "#fff", border: "1px dashed #555", borderRadius: "10px",
+        fontSize: "14px", fontFamily: "monospace"
+      }}
+    />
 
-                    <button className="btn-scan" onClick={analyzeContract} disabled={loading}>
-                      {loading ? `⏳ ${loadingMessage}` : `🔍 SCAN FILES`}
-                    </button>
+    {/* --- ACTION BUTTONS & SETTINGS --- */}
+    <div style={{ display: "flex", justifyContent: "center", gap: "15px", margin: "20px 0", flexWrap: "wrap" }}>
+      <div style={{ display: "inline-block" }}>
+        <input 
+          list="language-options" 
+          placeholder="Type language..." 
+          value={language} 
+          onChange={(e) => setLanguage(e.target.value)}
+          style={{
+            padding: "10px", borderRadius: "5px", border: "1px solid #444",
+            backgroundColor: "#222", color: "#fff", width: "150px", fontSize: "14px"
+          }}
+        />
+        <datalist id="language-options">
+          {filteredLanguages.map((lang) => (
+            <option key={lang} value={lang} />
+          ))}
+        </datalist>
+      </div>
 
-                    <button className="btn-clear" onClick={handleClear}>
-                      🗑️ RESET
-                    </button>
-                  </div>
+      <label style={{ display: "flex", alignItems: "center", cursor: "pointer", color: "#fff" }}>
+        <input 
+          type="checkbox" 
+          checked={indianLawMode} 
+          onChange={(e) => setIndianLawMode(e.target.checked)}
+          style={{ marginRight: "8px", transform: "scale(1.2)" }}
+        />
+        Indian Law Mode
+      </label>
 
-                  {/* --- RESULTS & REPORTS --- */}
-                  <ReportDisplay 
-                    analysis={analysis}
-                    riskScore={riskScore}
-                    loading={loading}
-                    cyberMode={cyberMode}
-                    resultsRef={resultsRef}
-                    handleCopy={handleCopy}
-                    handleDownload={handleDownload}
-                  />
+      <button className="btn-scan" onClick={analyzeContract} disabled={loading}>
+        {loading ? `⏳ ${loadingMessage}` : `🔍 SCAN FILES`}
+      </button>
 
-                  <SuggestionBox />
+      <button className="btn-clear" onClick={handleClear}>
+        🗑️ RESET
+      </button>
+    </div>
 
-                  <div className="section-container" style={{ maxWidth: '600px', margin: '20px auto' }}>
-                    <LocalHelp cyberMode={cyberMode} />
-                  </div>
-                </main>
+    {/* --- RESULTS & REPORTS --- */}
+    <ReportDisplay 
+      analysis={analysis}
+      riskScore={riskScore}
+      loading={loading}
+      cyberMode={cyberMode}
+      resultsRef={resultsRef}
+      handleCopy={handleCopy}
+      handleDownload={handleDownload}
+    />
 
-                {/* C. RIGHT SIDEBAR: CASE STUDIES */}
-                <aside className="sidebar-sticky" style={{ 
-                  borderLeft: cyberMode ? `3px solid ${themes.cyber.secondary}` : "3px solid #ff00ff",
-                  boxShadow: cyberMode ? themes.cyber.glow : "none" 
-                }}>
-                  <h3 style={{ 
-                    color: cyberMode ? themes.cyber.accent : "#ff00ff", 
-                    fontSize: "14px", marginBottom: "20px", textAlign: "center",
-                    textShadow: cyberMode ? `0 0 5px ${themes.cyber.accent}` : "none"
-                  }}>
-                    📖 CASE STUDIES
-                  </h3>
-                  <div className="sidebar-card" style={{ borderLeftColor: cyberMode ? themes.cyber.secondary : "#ff00ff" }}>
-                    <p style={{ color: "#fff", fontSize: "15px", lineHeight: "1.5" }}>
-                      {typeof currentCase === 'object' ? currentCase.text : currentCase}
-                    </p>
-                    <button 
-                      className="search-verify-btn"
-                      onClick={() => {
-                        const query = typeof currentCase === 'object' ? currentCase.text : currentCase;
-                        window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
-                      }}
-                    >
-                      <span>🔍</span> VERIFY ON GOOGLE
-                    </button>
-                  </div>
-                </aside>
-              </div> {/* End of legal-lens-layout */}
+    <SuggestionBox />
+
+    <div className="section-container" style={{ maxWidth: '600px', margin: '20px auto' }}>
+      <LocalHelp cyberMode={cyberMode} />
+    </div>
+  </main>
+
+  {/* C. RIGHT SIDEBAR: CASE STUDIES */}
+  <aside className="sidebar-sticky" style={{ 
+    borderLeft: cyberMode ? `3px solid ${themes.cyber.secondary}` : "3px solid #ff00ff",
+    boxShadow: cyberMode ? themes.cyber.glow : "none" 
+  }}>
+    <h3 style={{ fontSize: '1rem', marginBottom: '15px', color: cyberMode ? themes.cyber.secondary : '#ff00ff' }}>
+      📖 CASE STUDIES 
+      <span style={{ fontSize: '0.8rem', opacity: 0.7, marginLeft: '10px' }}>
+        ({caseIndex + 1}/{totalCases})
+      </span>
+    </h3>
+    <div className="sidebar-card" style={{ borderLeftColor: cyberMode ? themes.cyber.secondary : "#ff00ff" }}>
+      <p style={{ color: "#fff", fontSize: "15px", lineHeight: "1.5", marginBottom: "15px" }}>
+        {CASE_STUDIES[caseIndex]}
+      </p>
+      
+      {/* VERIFY BUTTON */}
+      <button 
+        className="search-verify-btn"
+        onClick={() => {
+          const query = CASE_STUDIES[caseIndex];
+          window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+        }}
+      >
+        <span>🔍</span> VERIFY ON GOOGLE
+      </button>
+
+      {/* --- NEW: SIDEBAR CONTROLS --- */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '20px' }}>
+        <button onClick={prevCase} className="sidebar-ctrl-btn">⏮️</button>
+        <button onClick={togglePlay} className="sidebar-ctrl-btn">
+          {isPlaying ? '⏸️' : '▶️'}
+        </button>
+        <button onClick={nextCase} className="sidebar-ctrl-btn">⏭️</button>
+      </div>
+    </div>
+  </aside>
+</div>
             </>
           } />
         </Routes>

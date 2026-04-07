@@ -7,7 +7,7 @@ export const useContractScanner = (language, indianLawMode) => {
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [analysis, setAnalysis] = useState("");
-  const [riskScore, setRiskScore] = useState(0); // Added: Tracks the 0-10 numeric score
+  const [riskScore, setRiskScore] = useState(0); 
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("Scanning document...");
   const [modelError, setModelError] = useState("");
@@ -46,7 +46,7 @@ export const useContractScanner = (language, indianLawMode) => {
       }));
       setPreviews(newPreviews);
       setAnalysis(""); 
-      setRiskScore(0); // Reset score on new file
+      setRiskScore(0); 
     }
   };
 
@@ -90,21 +90,26 @@ export const useContractScanner = (language, indianLawMode) => {
     try {
       const fileParts = await Promise.all(files.map(fileToGenerativePart));
 
+      // --- STRICT UPDATED PROMPT ---
       const finalPrompt = `### ROLE
-You are a "Predatory Clause Hunter" and Senior High Court Auditor with 30 years of experience. You have ZERO tolerance for traps or absurd demands.
+You are "Legal-Lens AI," an advanced automated contract analysis system. Your purpose is to identify high-risk, predatory, or legally questionable clauses for educational review.
+
+### MANDATORY DISCLAIMER
+Every response MUST begin with this exact text: "⚠️ AI-GENERATED ANALYSIS: This report is for educational purposes only and DOES NOT constitute legal advice. I am an AI, not a lawyer or a court official."
 
 ### MANDATORY OUTPUT FORMAT
 1. You MUST start your response with this exact tag: [RISK_SCORE: X/10] (Replace X with 0-10 score).
-2. Follow the tag with a professional "DIAGNOSTIC REPORT."
+2. Follow the tag with an "AI DIAGNOSTIC REPORT."
 
 ### CRITICAL AUDIT RULES
+- **IDENTITY:** Never claim to be a Judge, Auditor, or Human Official. You are software.
 - **ABSURDITY:** If a clause mentions "souls," "tigers," "first-born children," or "physically impossible" demands, flag as 10/10 RISK.
 - **QUIET ENJOYMENT:** Flag any noise/drilling during sleeping hours (10PM-7AM) as 9/10 RISK.
 - **UNCERTAINTY:** (INDIAN LAW MODE: ${indianLawMode ? "ACTIVE" : "INACTIVE"})
-${indianLawMode ? `VETO agreements lacking "Certainty" (Section 29, Indian Contract Act). CITE sections.` : ""}
+${indianLawMode ? `Analyze based on "Certainty" (Section 29, Indian Contract Act). CITE sections as an AI-powered reference.` : ""}
 
 ### AUDIT EXECUTION
-Analyze the content with "Extreme Prejudice." Output in ${language}.
+Analyze the content strictly and professionally. Output in ${language}.
 
 ${manualText ? `\n\nTEXT TO ANALYZE:\n${manualText}` : ""}`;
 
@@ -126,13 +131,13 @@ ${manualText ? `\n\nTEXT TO ANALYZE:\n${manualText}` : ""}`;
       const data = await response.json();
       const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text || "No analysis generated.";
 
-      // --- NEW: SCORE EXTRACTION LOGIC ---
-      // This looks for the [RISK_SCORE: X/10] tag in the AI response
+      // --- SCORE EXTRACTION LOGIC ---
       const scoreMatch = resultText.match(/\[RISK_SCORE:\s*(\d+)/i);
       const extractedScore = scoreMatch ? parseInt(scoreMatch[1]) : 0;
       setRiskScore(extractedScore); 
 
-      // Clean the text: remove the [RISK_SCORE] tag so the user doesn't see it in the report
+      // Clean the text: remove ONLY the [RISK_SCORE] tag. 
+      // The AI's Disclaimer will now show up at the top of your UI report!
       const cleanedReport = resultText.replace(/\[RISK_SCORE:.*?\]/g, "").trim();
       setAnalysis(cleanedReport);
 
@@ -150,7 +155,7 @@ ${manualText ? `\n\nTEXT TO ANALYZE:\n${manualText}` : ""}`;
     handleFileChange,
     previews,
     analysis,
-    riskScore, // Added: Make sure your RiskGauge component uses this!
+    riskScore, 
     loading,
     loadingMessage,
     apiStatus,

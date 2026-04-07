@@ -177,7 +177,7 @@ button {
 
 /* That cool "diagonal stamp" look */
 .result-box::before {
-  content: "OFFICIAL AUDIT";
+  content: "SMART AUDIT";
   position: absolute;
   top: 15px;
   right: -30px;
@@ -248,4 +248,40 @@ button {
   0% { box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); border-color: #444; }
   50% { box-shadow: 0 0 20px rgba(0, 123, 255, 0.5); border-color: var(--accent-blue); }
   100% { box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); border-color: #444; }
+}
+.sidebar-ctrl-btn {
+  background: transparent;
+  border: 1px solid #444;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar-ctrl-btn:hover {
+  border-color: #00ff00; /* Glows neon green on hover */
+  transform: scale(1.1);
+}
+/* Styling for your new Sidebar Controls */
+.sidebar-ctrl-btn {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #444;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.sidebar-ctrl-btn:hover {
+  border-color: #00ff00; /* Neon green glow on hover */
+  background: rgba(0, 255, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.sidebar-ctrl-btn:active {
+  transform: translateY(0);
 }

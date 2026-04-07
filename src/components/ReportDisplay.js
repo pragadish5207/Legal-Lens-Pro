@@ -13,7 +13,7 @@ const ReportDisplay = ({ analysis, riskScore, loading, cyberMode, resultsRef, ha
         color: cyberMode ? themes.cyber.accent : "#4da6ff" 
       }}>
         <div className="loading-pulse">🛡️ AUDITOR IS DISSECTING CLAUSES...</div>
-        <p style={{fontSize: "12px", marginTop: "10px", opacity: 0.7}}>Please wait for the official diagnostic.</p>
+        <p style={{fontSize: "12px", marginTop: "10px", opacity: 0.7}}>Please wait for the AI diagnostic.</p>
       </div>
     );
   }
