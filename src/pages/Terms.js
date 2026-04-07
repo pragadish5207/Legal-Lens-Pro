@@ -37,7 +37,7 @@ function Terms() {
       <section style={styles.section}>
         <h2 style={styles.subheading}>2. AI Diagnostic Nature & Accuracy</h2>
         <p style={styles.paragraph}>
-          Legal-Lens Pro utilizes the <strong>Google Gemini 1.5 Flash API</strong>. 
+          Legal-Lens Pro utilizes the <strong>Google Gemini 3 Flash API</strong>. 
           While the model is highly advanced, AI can produce "hallucinations" or 
           incorrect interpretations. 
           <br /><br />
@@ -120,7 +120,7 @@ function Terms() {
           Legal-Lens Pro is provided on an <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> 
           basis. We disclaim all warranties, whether express or implied, including the 
           warranty of merchantability or fitness for a particular legal purpose. 
-          The use of the <strong>Gemini 1.5 Flash API</strong> is subject to Google's 
+          The use of the <strong>Gemini 3 Flash API</strong> is subject to Google's 
           own service availability and uptime.
         </p>
       </section>

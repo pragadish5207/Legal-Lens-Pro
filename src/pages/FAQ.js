@@ -13,7 +13,7 @@ const FAQ = () => {
     {
       category: "I. Legal-Lens Pro: Features & Usage",
       questions: [
-        { q: "What is the Risk-O-Meter, and how is it calculated?", a: "The Risk-O-Meter evaluates contracts on a 0-10 scale. It uses Gemini 1.5 Flash to scan for missing statutory clauses, uncertain terms, and violations of the Indian Contract Act. A higher score indicates higher predatory risk." },
+        { q: "What is the Risk-O-Meter, and how is it calculated?", a: "The Risk-O-Meter evaluates contracts on a 0-10 scale. It uses Gemini 3 Flash to scan for missing statutory clauses, uncertain terms, and violations of the Indian Contract Act. A higher score indicates higher predatory risk." },
         { q: "Does Legal-Lens Pro store my documents?", a: "No. Privacy is our priority. We use real-time processing via the API. No data, PDF, or image is saved to our servers once your session ends." },
         { q: "How do I find local legal aid?", a: "Our Pan-India DLSA integration covers 750+ districts. Use the 'Find Legal Help' tool to locate authorized legal services in your specific State and District." },
         { q: "Can I scan contracts in regional languages?", a: "Yes. We support 50+ languages including Gujarati, Hindi, Tamil, and Marathi, ensuring legal literacy reaches every corner of India." },
@@ -60,7 +60,7 @@ const FAQ = () => {
     {
       category: "V. Liability & Professional Safeguards",
       questions: [
-        { q: "Is the AI's Risk Score a final legal judgment?", a: "No. It is a data-driven diagnostic based on Gemini 1.5's analysis of your text. It does not account for specific situational nuances that only a qualified human lawyer can evaluate." },
+        { q: "Is the AI's Risk Score a final legal judgment?", a: "No. It is a data-driven diagnostic based on Gemini 3's analysis of your text. It does not account for specific situational nuances that only a qualified human lawyer can evaluate." },
         { q: "Can Legal-Lens Pro be held liable for contract disputes?", a: "No. As stated in our User Agreement, this is an educational tool. Users are solely responsible for their legal decisions. The AI provides a 'first look,' not a 'final word.'" },
         { q: "Why do I still need a lawyer if I have AI?", a: "AI scans for patterns and statutory red flags (like Section 29 or Section 25), but a lawyer provides strategy, courtroom representation, and professional empathy. AI is your first line of defense; an advocate is your ultimate shield." },
         { q: "Does this tool create an attorney-client relationship?", a: "No. Use of this application does not constitute legal representation or an attorney-client relationship. It is an AI-assisted research and literacy platform." }
@@ -103,7 +103,7 @@ const FAQ = () => {
                 "name": "How does the AI Risk-O-Meter work?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "It uses Gemini 1.5 Flash to scan for predatory clauses and violations of the Indian Contract Act, providing a score from 0-10."
+                  "text": "It uses Gemini 3 Flash to scan for predatory clauses and violations of the Indian Contract Act, providing a score from 0-10."
                 }
               }
             ]

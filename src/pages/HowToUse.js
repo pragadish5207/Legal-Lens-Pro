@@ -58,7 +58,7 @@ function HowToUse() {
         <h2 style={styles.subheading}>04. Run the AI Diagnostic</h2>
         <p style={styles.paragraph}>
           Once your file is ready, click <strong>"Scan Files."</strong> Our system uses 
-          <strong> Gemini 1.5 Flash</strong> to perform a deep-layer audit, 
+          <strong> Gemini 3 Flash</strong> to perform a deep-layer audit, 
           cross-referencing your document against standard legal safety protocols in seconds.
         </p>
       </section>

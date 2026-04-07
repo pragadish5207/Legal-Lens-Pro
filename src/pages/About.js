@@ -6,7 +6,7 @@ function About() {
     <div style={styles.container}>
       <Helmet>
         <title>About Legal-Lens Pro | Meet the Founder Pragadishwar</title>
-        <meta name="description" content="Discover how Legal-Lens Pro uses Gemini 1.5 Flash to simplify the Indian Contract Act 1872. Built by AI Innovator Pragadishwar." />
+        <meta name="description" content="Discover how Legal-Lens Pro uses Gemini 3 Flash to simplify the Indian Contract Act 1872. Built by AI Innovator Pragadishwar." />
       </Helmet>
 
       {/* --- HERO SECTION --- */}
@@ -51,7 +51,7 @@ function About() {
           <div style={styles.featureItem}>
             <h3 style={styles.featureTitle}>📄 Multimodal OCR</h3>
             <p style={styles.featureText}>
-              Powered by <strong>Gemini 1.5 Flash</strong>, our scanner processes 
+              Powered by <strong>Gemini 3 Flash</strong>, our scanner processes 
               PDFs, images, and raw text with a 1-million token context window.
             </p>
           </div>
@@ -62,7 +62,7 @@ function About() {
       <section style={styles.section}>
         <h2 style={styles.subheading}>The Intelligence Layer</h2>
         <p style={styles.paragraph}>
-          By leveraging the <strong>Gemini 1.5 Flash API</strong>, Legal-Lens Pro performs 
+          By leveraging the <strong>Gemini 3 Flash API</strong>, Legal-Lens Pro performs 
           an <em>automated contract review</em> that cross-references your documents against 
           standard Indian statutes. We analyze for hidden liabilities, unconscionable 
           bargains, and Section 29 violations in real-time.

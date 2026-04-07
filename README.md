@@ -15,7 +15,7 @@ Legal-Lens Pro utilizes advanced AI to break down complex legal jargon into unde
 ## 🛠️ Tech Stack
 
 * **Frontend:** React.js, Tailwind CSS
-* **AI Engine:** Gemini 1.5 Flash API
+* **AI Engine:** Gemini 3 Flash API
 * **Hosting/Deployment:** Vercel
 
 ## 💻 Local Setup
