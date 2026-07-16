@@ -14,7 +14,7 @@ export const PATCH_UPDATES = [
   },
   {
     version: "v2.5",
-    date: "April 2026",
+    date: "July 2026",
     status: "LATEST", // This keeps it highlighted as the current version
     title: "The Dashboard Revolution",
     description: "A major UI overhaul and content expansion for a '360-degree' legal experience.",
@@ -28,7 +28,7 @@ export const PATCH_UPDATES = [
   },
   {
     version: "v2.0",
-    date: "March 2026",
+    date: "May 2026",
     status: "STABLE",
     title: "Cyber Mode & Risk-O-Meter",
     description: "Introduced advanced visualization and theming for high-risk detection.",
@@ -41,7 +41,7 @@ export const PATCH_UPDATES = [
   },
   {
     version: "v1.5",
-    date: "February 2026",
+    date: "March 2026",
     status: "STABLE",
     title: "Pan-India Legal Aid Integration",
     description: "Bridged the gap between AI analysis and real-world legal assistance.",
