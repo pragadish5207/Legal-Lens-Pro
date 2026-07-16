@@ -105,8 +105,8 @@ function HowToUse() {
         <p style={styles.paragraph}>
           Legal-Lens Pro is a living product. Visit the <strong>Updates</strong> page 
           to see our monthly journey—from our MVP launch in January to the major 
-          <strong> Pan-India Integration</strong> in February and the Dashboard 
-          Revolution in April.
+          <strong> Pan-India Integration</strong> in March and the Dashboard 
+          Revolution in July.
         </p>
       </section>
     </div>

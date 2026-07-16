@@ -12,7 +12,7 @@ function Terms() {
       {/* --- HEADER --- */}
       <section style={styles.section}>
         <h1 className="gradient-text" style={styles.heading}>Terms of Service</h1>
-        <p style={styles.tagline}>LAST UPDATED: APRIL 2026 | VERSION 2.5</p>
+        <p style={styles.tagline}>LAST UPDATED: July 2026 | VERSION 2.5</p>
         <p style={styles.paragraph}>
           By accessing or using <strong>Legal-Lens Pro</strong>, you signify your 
           agreement to be bound by these Terms. This platform is a specialized 
